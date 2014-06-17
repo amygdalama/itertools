@@ -1,7 +1,6 @@
 import itertools
 import pprint
 
-
 class Node(object):
     def __init__(self, data):
         self.data = data
@@ -57,6 +56,6 @@ def product(*args):
 if __name__ == '__main__':
     result = product(range(7), range(2), range(5))
     expected = itertools.product(range(7), range(2), range(5))
-    for exp, res in zip(expected, result):
+    for exp, res in itertools.izip(expected, result):
         assert exp == res
     product_by_tree(range(3), range(2))
