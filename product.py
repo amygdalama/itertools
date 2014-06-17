@@ -34,16 +34,15 @@ class ProductTree(object):
 
 
 def depth_first_traversal(node, path=[]):
-    
     for child in node.children:
         if not node.data == "root":
             path.append(node)
         depth_first_traversal(child, path)
 
-    if len(path) > 0:
-        line = path[:]
-        line.append(node)
-        print tuple(line)
+    if path:
+        path.append(node)
+        print tuple(path)
+        path.pop(0)
         path.pop(0)
 
 
