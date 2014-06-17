@@ -33,10 +33,18 @@ class ProductTree(object):
             self.add_children(l)
 
 
-def depth_first_traversal(node, branches=[]):
-    print node
+def depth_first_traversal(node, path=[]):
+    
     for child in node.children:
-        depth_first_traversal(child)
+        if not node.data == "root":
+            path.append(node)
+        depth_first_traversal(child, path)
+
+    if len(path) > 0:
+        line = path[:] # Make deep copy.
+        line.append(node)
+        print tuple(line)
+        path.pop(0)
 
 
 def product_by_tree(*args):
@@ -54,8 +62,12 @@ def product(*args):
 
 
 if __name__ == '__main__':
-    result = product(range(7), range(2), range(5))
-    expected = itertools.product(range(7), range(2), range(5))
+    result = product(xrange(0, 3), xrange(4, 6))
+    expected = itertools.product(xrange(0, 3), xrange(4, 6))
+    print "itertools.product:"
     for exp, res in itertools.izip(expected, result):
+        print res
         assert exp == res
-    product_by_tree(range(3), range(2))
+
+    print "product_by_tree:"
+    pbt = product_by_tree(xrange(0,3), xrange(4,6))
