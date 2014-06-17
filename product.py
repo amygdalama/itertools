@@ -19,6 +19,9 @@ class ProductTree(object):
         self.root = Node("root")
         self.leaves = [self.root]
 
+    def __repr__(self):
+        pass
+
     def add_children(self, l):
         """Add children to all 'end' leaves."""
         new_leaves = []
@@ -34,16 +37,28 @@ class ProductTree(object):
             self.add_children(l)
 
 
-def depth_first_traversal(node, branches=[]):
-    print node
-    for child in node.children:
-        depth_first_traversal(child)
+def depth_first_traversal(node):
+    pass
 
 
 def product_by_tree(*args):
     t = ProductTree()
     t.create_from_lists(*args)
-    return depth_first_traversal(t.root)
+    print depth_first_traversal(t.root)
+
+
+def other_product(*args):
+    args = list(args)
+    l = args.pop(0)
+    result = [[elem] for elem in l]
+    while args:
+        l = args.pop(0)
+        new_result = []
+        for res in result:
+            for elem in l:
+                new_result.append(res + [elem])
+        result = new_result
+    return result
 
 
 def product(*args):
@@ -59,4 +74,4 @@ if __name__ == '__main__':
     expected = itertools.product(range(7), range(2), range(5))
     for exp, res in zip(expected, result):
         assert exp == res
-    product_by_tree(range(3), range(2))
+    print other_product(range(3), range(2))
