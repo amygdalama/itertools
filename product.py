@@ -35,7 +35,7 @@ class ProductTree(object):
 
 def depth_first_traversal(node, path=[]):
     for child in node.children:
-        if not node.data == "root":
+        if node.data != "root":
             path.append(node)
         depth_first_traversal(child, path)
 
