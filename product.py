@@ -41,7 +41,7 @@ def depth_first_traversal(node, path=[]):
         depth_first_traversal(child, path)
 
     if len(path) > 0:
-        line = path[:] # Make deep copy.
+        line = path[:]
         line.append(node)
         print tuple(line)
         path.pop(0)
