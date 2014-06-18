@@ -37,8 +37,16 @@ class ProductTree(object):
             self.add_children(l)
 
 
-def depth_first_traversal(node):
-    pass
+def depth_first_traversal(node, path=[]):
+    for child in node.children:
+        if node.data != "root":
+            path.append(node)
+        depth_first_traversal(child, path)
+    if path:
+        path.append(node)
+        print tuple(path)
+        path.pop(0)
+        path.pop(0)
 
 
 def product_by_tree(*args):
@@ -70,8 +78,13 @@ def product(*args):
 
 
 if __name__ == '__main__':
-    result = product(range(7), range(2), range(5))
-    expected = itertools.product(range(7), range(2), range(5))
-    for exp, res in zip(expected, result):
+    result = product(xrange(0, 3), xrange(4, 6))
+    expected = itertools.product(xrange(0, 3), xrange(4, 6))
+    print "itertools.product:"
+    for exp, res in itertools.izip(expected, result):
+        print res
         assert exp == res
+    print "other product: "
     print other_product(range(3), range(2))
+    print "product_by_tree:"
+    pbt = product_by_tree(xrange(0,3), xrange(4,6))
