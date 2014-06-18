@@ -38,7 +38,6 @@ class ProductTree(object):
 
 
 def depth_first_traversal(node):
-    paths = []
     queue = [[node]]
     while queue:
         path = queue.pop(0)
@@ -49,16 +48,14 @@ def depth_first_traversal(node):
                 new_path.append(child)
                 queue.append(new_path)
         else:
-            paths.append(path)
-    return paths
+            yield tuple(path[1:])
 
 
 def product_by_tree(*args):
     t = ProductTree()
     t.create_from_lists(*args)
     paths = depth_first_traversal(t.root)
-    for path in paths:
-        print path
+    return paths
 
 
 def other_product(*args):
@@ -72,7 +69,7 @@ def other_product(*args):
             for elem in l:
                 new_result.append(res + [elem])
         result = new_result
-    return result
+    return [tuple(r) for r in result]
 
 
 def product(*args):
@@ -84,13 +81,9 @@ def product(*args):
 
 
 if __name__ == '__main__':
-    result = product(xrange(0, 3), xrange(4, 6))
     expected = itertools.product(xrange(0, 3), xrange(4, 6))
-    print "itertools.product:"
-    for exp, res in itertools.izip(expected, result):
-        print res
-        assert exp == res
-    # print "other product: "
-    # print other_product(range(3), range(2))
-    # print "product_by_tree:"
-    pbt = product_by_tree(xrange(0,3), xrange(4,6))
+    doc_prod = product(xrange(0, 3), xrange(4, 6))
+    tree_prod = product_by_tree(xrange(0, 3), xrange(4, 6))
+    other_prod = other_product(xrange(0, 3), xrange(4, 6))
+    for results in itertools.izip(expected, doc_prod, tree_prod, other_prod):
+        assert all(repr(r) == repr(results[0]) for r in results)
