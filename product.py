@@ -52,7 +52,7 @@ def depth_first_traversal(node, path=[]):
 def product_by_tree(*args):
     t = ProductTree()
     t.create_from_lists(*args)
-    print depth_first_traversal(t.root)
+    dft = depth_first_traversal(t.root)
 
 
 def other_product(*args):
